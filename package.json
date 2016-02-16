@@ -1,0 +1,23 @@
+{
+  "name": "ecash-toll-web",
+  "version": "0.0.1",
+  "description": "Web Frontend for ECashToll",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hermes-mandirihackathon/ecash-toll-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hermes-mandirihackathon/ecash-toll-web/issues"
+  },
+  "homepage": "https://github.com/hermes-mandirihackathon/ecash-toll-web#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-http-server": "^1.14.0"
+  }
+}
