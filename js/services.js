@@ -91,3 +91,47 @@ appServices.factory('mockData',function(){
         ]
     };
 });
+
+appServices.service('authService',['$cookies','$rootScope',function($cookies,$rootScope){
+    var ETOLL_TOKEN_COOKIES_KEY = "etoll_token_cookies_key";
+    this.EVENT_AUTHENTICATED = "event_auth";
+    this.EVENT_LOGGED_OUT = "logged_out";
+
+    this.isAuthenticated = function(){
+        return this.getToken() != null;
+    };
+
+    this.authenticate = function(token){
+        this.setToken(token);
+        this.isAuthenticated = true;
+        $rootScope.$emit(this.EVENT_AUTHENTICATED);
+    };
+
+    this.getToken = function(){
+        return $cookies.get(ETOLL_TOKEN_COOKIES_KEY);
+    };
+
+    this.setToken = function(token){
+        return $cookies.put(ETOLL_TOKEN_COOKIES_KEY,token);
+    };
+
+    this.logout = function(){
+        $cookies.remove(ETOLL_TOKEN_COOKIES_KEY);
+        this.isAuthenticated = false;
+        $rootScope.$emit(this.EVENT_LOGGED_OUT);
+    };
+
+}]);
+
+appServices.factory('navbarMenu',function(){
+    return {
+        guest: [
+            {label: "login",url:"/#/login"}
+        ],
+        auth: [
+            {label: "petugas", url:"/#/list-staff"},
+            {label: "tol", url:"/#/toll"},
+            {label: "logout",url:"/#/logout"}
+        ]
+    };
+});

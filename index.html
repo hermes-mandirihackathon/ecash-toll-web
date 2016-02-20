@@ -4,6 +4,7 @@
 		<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
         <link href="css/main.css" rel="stylesheet"/>
 		<script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
         <script src="js/services.js"></script>
         <script src="js/controllers.js"></script>
@@ -11,7 +12,7 @@
 	</head>
 	<body>
         <!-- begin navbar -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top" ng-controller="navbarCtrl" ng-init="init()">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -25,15 +26,15 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Link</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-repeat="menu in menus">
+                        <a href="{{menu.url}}">{{menu.label}}</a>
+                    </li>
+                </ul>
             </div><!-- /.container-fluid -->
         </nav>
         <!-- end navbar-->
-
+        <div style="padding:30px;"></div>
         <div style="text-align: center;">
             <a href="/#/login">Login</a> |
             <a href="/#/toll">Toll</a> |

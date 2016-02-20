@@ -1,5 +1,6 @@
 var app = angular.module('etollApp',[
     'ngRoute',
+    'ngCookies',
     'etollControllers'
 ]);
 
@@ -20,6 +21,10 @@ app.config(['$routeProvider',function($routeProvider){
         .when('/add-staff',{
             templateUrl: 'views/add-staff.html',
             controller : 'addStaffCtrl'
+        })
+        .when('/logout',{
+            controller: 'logoutCtrl',
+            templateUrl: 'views/logout.html'
         })
         .otherwise("/toll");
 }]);

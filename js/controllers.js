@@ -2,9 +2,10 @@ var appCtrls = angular.module('etollControllers',[
     'etollServices'
 ]);
 
-appCtrls.controller('loginCtrl',['$scope','etollApi','$location',function($scope,etollApi,$location){
+appCtrls.controller('loginCtrl',['$scope','etollApi','$location','authService',function($scope,etollApi,$location,authService){
 
     $scope.submit = function(email,password){
+        authService.authenticate("aaa");
         $location.path("/toll");
         //TODO perform http request
         //etollApi.login(email,password)
@@ -76,4 +77,39 @@ appCtrls.controller('addStaffCtrl',['$scope','$location','etollApi',function($sc
                 $location.path("/list-staff");
             });
     }
+}]);
+
+appCtrls.controller('navbarCtrl',['authService','$scope','$location','navbarMenu','$rootScope',function(authService,$scope,$location,navbarMenu,$rootScope){
+
+    $scope.logout = function(){
+        authService.logout();
+        $location.path("/login");
+    };
+
+    $rootScope.$on(authService.EVENT_AUTHENTICATED,function(){
+        console.log("token = " + authService.getToken());
+        $scope.menus = navbarMenu.auth;
+    });
+
+    $rootScope.$on(authService.EVENT_LOGGED_OUT,function(){
+        console.log("token = "+ authService.getToken());
+        $scope.menus = navbarMenu.guest;
+    });
+
+    //init
+    if (authService.isAuthenticated()){
+        $scope.menus = navbarMenu.auth;
+    } else {
+        $scope.menus = navbarMenu.guest;
+    }
+
+
+}]);
+
+appCtrls.controller('logoutCtrl',['authService','$location','$scope',function(authService,$location,$scope){
+    $scope.logout = function(){
+        authService.logout();
+        $location.path("/login");
+    };
+    $scope.logout();
 }]);
