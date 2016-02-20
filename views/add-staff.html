@@ -1,0 +1,18 @@
+<div class="col-md-6 col-md-offset-3">
+    <div class="row title-row">
+        Tambah staff
+    </div>
+    <div class="row">
+        <input type="text" class="form-control" ng-model="email" placeholder="email"/>
+    </div>
+    <div class="row">
+        <input type="password" class="form-control" ng-model="password" placeholder="password"/>
+    </div>
+    <div class="row">
+        <input type="text" class="form-control" ng-model="toll_gate" placeholder="toll_gate"/>
+    </div>
+    <div class="row button-row">
+        <button type="button" class="btn btn-primary"
+                ng-click="addUser(email,password,toll_gate)" ng-disabled="disableSubmitButton">Tambah</button>
+    </div>
+</div>

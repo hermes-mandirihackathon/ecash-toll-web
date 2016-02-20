@@ -1,13 +1,16 @@
 <div class="col-md-12">
 <div class="col-md-6 col-md-offset-3">
     <form>
-        <div class="row">
-            <input type="text" ng-model="email"/>
+        <div class="title-row">
+            Login
         </div>
         <div class="row">
-            <input type="password" ng-model="password"/>
+            <input type="text" ng-model="email" class="form-control" placeholder="email"/>
         </div>
         <div class="row">
+            <input type="password" ng-model="password" class="form-control" placeholder="password"/>
+        </div>
+        <div class="row button-row">
             <button class="btn btn-primary" type="button" ng-click="submit(email,password)">Login</button>
         </div>
     </form>

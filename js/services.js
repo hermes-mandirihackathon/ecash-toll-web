@@ -15,6 +15,10 @@ appServices.service('etollApiUrl',function(){
         return BASE_URL + "/tolls/";
     };
 
+    this.createStaff = function(email,password,toll_gate){
+        return BASE_URL + "/staffs/create?email="+email+"&password="+password+"&toll_gate_id="+toll_gate;
+    }
+
 });
 appServices.service('etollApi',['$http','$q','etollApiUrl',function($http,$q,etollApiUrl){
     this.login = function(email,password){
@@ -54,7 +58,20 @@ appServices.service('etollApi',['$http','$q','etollApiUrl',function($http,$q,eto
                 deferred.reject(status+" " +data);
             });
         return deferred.promise;
-    }
+    };
+
+    this.createStaff = function(email,password,status){
+        var url = etollApiUrl.createStaff(email,password,status);
+        var deferred = $q.defer();
+        $http.get(url)
+            .success(function(data){
+                deferred.resolve(data);
+            })
+            .error(function(data,status){
+                deferred.reject(status+" "+data);
+            });
+        return deferred.promise;
+    };
 }]);
 
 appServices.factory('mockData',function(){
@@ -66,6 +83,11 @@ appServices.factory('mockData',function(){
         vehicleCategories : [
             { id : 1, name: "Mobil" },
             { id : 2, name: "Becak" }
+        ],
+        staffs : [
+            { id : 1, email: "Yafi", toll_gate: "Pasteur"},
+            { id : 1, email: "Rosi", toll_gate: "Kopo"},
+            { id : 1, email: "Ichwan", toll_gate: "Buah Batu"}
         ]
     };
 });

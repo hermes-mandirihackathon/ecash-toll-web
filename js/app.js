@@ -21,4 +21,5 @@ app.config(['$routeProvider',function($routeProvider){
             templateUrl: 'views/add-staff.html',
             controller : 'addStaffCtrl'
         })
+        .otherwise("/toll");
 }]);

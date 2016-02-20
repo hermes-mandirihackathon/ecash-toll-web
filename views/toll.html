@@ -1,21 +1,29 @@
 <div class="col-md-12">
 <form>
-    <div class="col-md-6 col-md-offset-3">
+    <div class="row title-row">
+        Input data
+    </div>
+    <div class="col-md-6">
+        <img src="/mockups/1-login.png" width="100%"/>
+    </div>
+    <div class="col-md-6">
         <div class="row">
-            <select ng-options="source as source.name for source in sourceTolls track by source.id" ng-model="sourceTollId">
+            <select ng-options="source as source.name for source in sourceTolls track by source.id" ng-model="sourceTollId"
+            class="form-control">
             </select>
         </div>
         <div class="row">
-            <select ng-options="cat as cat.name for cat in vehicleCategories track by cat.id" ng-model="vehicleCategoryId">
+            <select ng-options="cat as cat.name for cat in vehicleCategories track by cat.id" ng-model="vehicleCategoryId"
+            class="form-control">
             </select>
         </div>
         <div class="row">
-            <input type="text" ng-model="plate_no"/>
+            <input type="text" ng-model="plate_no" class="form-control"/>
         </div>
         <div class="row">
         </div>
-        <div class="row">
-            <button class="btn btn-primary" ng-click="submit(plateNo,sourceTollId,destTollId,price)">Submit</button>
+        <div class="row button-row">
+            <button class="btn btn-primary" ng-click="submit(plateNo,sourceTollId,destTollId,price)" ng-disabled="disableSubmitButton">Submit</button>
         </div>
     </div>
 </form>
