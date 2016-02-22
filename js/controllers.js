@@ -2,9 +2,11 @@ var appCtrls = angular.module('etollControllers',[
     'etollServices'
 ]);
 
-appCtrls.controller('loginCtrl',['$scope','etollApi','$location','authService',function($scope,etollApi,$location,authService){
+appCtrls.controller('loginCtrl',['$scope','etollApi','$location','authService','alertService',
+    function($scope,etollApi,$location,authService,alertService){
 
     $scope.submit = function(email,password){
+        alertService.success("test");
         authService.authenticate("aaa");
         $location.path("/toll");
         //TODO perform http request
@@ -112,4 +114,34 @@ appCtrls.controller('logoutCtrl',['authService','$location','$scope',function(au
         $location.path("/login");
     };
     $scope.logout();
+}]);
+
+appCtrls.controller('alertCtrl',['$scope','alertService','$rootScope','$location',function($scope,alertService,$rootScope,$location){
+    var ALERT_TIMEOUT = 3000; //millis
+    $scope.hide = true;
+
+    $scope.close = function(){
+        $scope.hide = true;
+    };
+
+
+    $rootScope.$on(alertService.EVENT_SUCCESS,function(){
+        console.log("a");
+        $scope.message = alertService.getMessage();
+        $scope.hide = false;
+        setTimeout(function(){
+            $scope.hide = true;
+            $scope.$digest();
+        },ALERT_TIMEOUT);
+    });
+
+    $rootScope.$on(alertService.EVENT_ERROR, function () {
+        $scope.message = alertService.getMessage();
+        $scope.hide = false;
+        setTimeout(function(){
+            $scope.hide = true;
+            $scope.$digest();
+        },ALERT_TIMEOUT);
+    });
+
 }]);

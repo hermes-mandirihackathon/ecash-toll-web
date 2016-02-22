@@ -35,6 +35,12 @@
         </nav>
         <!-- end navbar-->
         <div style="padding:30px;"></div>
+        <div class="container">
+            <div ng-controller="alertCtrl" class="alert alert-success" ng-hide="hide">
+                <button type="button" class="close" ng-click="close()"><span>&times;</span></button>
+                {{message}}
+            </div>
+        </div>
         <div style="text-align: center;">
             <a href="/#/login">Login</a> |
             <a href="/#/toll">Toll</a> |

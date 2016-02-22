@@ -135,3 +135,23 @@ appServices.factory('navbarMenu',function(){
         ]
     };
 });
+
+appServices.service('alertService',['$rootScope',function($rootScope){
+    this.EVENT_SUCCESS = 1;
+    this.EVENT_ERROR = 2;
+
+    var _message;
+
+    this.getMessage = function(){ return _message; };
+
+
+    this.success = function(message){
+        _message = message;
+        $rootScope.$emit(this.EVENT_SUCCESS);
+    };
+
+    this.error = function(message){
+        _message = message;
+        $rootScope.$emit(this.EVENT_ERROR);
+    };
+}]);
