@@ -9,10 +9,12 @@
         <input type="password" class="form-control" ng-model="password" placeholder="password"/>
     </div>
     <div class="row">
-        <input type="text" class="form-control" ng-model="toll_gate" placeholder="toll_gate"/>
+        <select ng-options="toll as toll.name for toll in tolls track by source.id" ng-model="tollId"
+                class="form-control">
+        </select>
     </div>
     <div class="row button-row">
         <button type="button" class="btn btn-primary"
-                ng-click="addUser(email,password,toll_gate)" ng-disabled="disableSubmitButton">Tambah</button>
+                ng-click="addUser(email,password,tollId)" ng-disabled="disableSubmitButton">Tambah</button>
     </div>
 </div>
