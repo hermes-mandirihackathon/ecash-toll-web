@@ -1,12 +1,20 @@
 <div class="col-md-12">
 <form>
-    <div class="row title-row">
-        Input data
+    <div class="row row-top">
+
     </div>
-    <div class="col-md-6">
-        <img src="/mockups/1-login.png" width="100%"/>
+    <div class="row alert alert-success" role="alert">
+        <strong>#454544</strong> submitted successfully.
     </div>
-    <div class="col-md-6">
+    <div class="row title-row title-line">
+        <span>
+            #454545
+        </span>
+    </div>
+    <div class="col-md-7">
+        <img src="/img/plat.png" width="100%"/>
+    </div>
+    <div class="col-md-5">
         <div class="row">
             <select ng-options="source as source.name for source in sourceTolls track by source.id" ng-model="sourceTollId"
             class="form-control">
@@ -21,9 +29,15 @@
             <input type="text" ng-model="plate_no" class="form-control"/>
         </div>
         <div class="row">
+            <div class="col-md-4 no-padding">
+                Total
+            </div>
+            <div class="col-md-8 no-padding price">
+                Rp39.000,-
+            </div>
         </div>
         <div class="row button-row">
-            <button class="btn btn-primary" ng-click="submit(plateNo,sourceTollId,destTollId,price)" ng-disabled="disableSubmitButton">Submit</button>
+            <button class="btn btn-primary btn-submit" ng-click="submit(plateNo,sourceTollId,destTollId,price)" ng-disabled="disableSubmitButton">Submit</button>
         </div>
     </div>
 </form>
