@@ -141,3 +141,7 @@ select::-ms-expand {
 td > a {
     padding-right: 10px;
 }
+
+thead {
+    background-color: #e2edef !important;
+}
