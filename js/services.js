@@ -15,8 +15,8 @@ appServices.service('etollApiUrl',function(){
         return BASE_URL + "/tolls/";
     };
 
-    this.createStaff = function(email,password,toll_gate){
-        return BASE_URL + "/staffs/create?email="+email+"&password="+password+"&toll_gate_id="+toll_gate;
+    this.createStaff = function(email,password,toll_gate,token){
+        return BASE_URL + "/staffs/create?email="+email+"&password="+password+"&toll_id="+toll_gate+"&token="+token;
     };
 
     this.getStaffs = function(token){
@@ -64,8 +64,8 @@ appServices.service('etollApi',['$http','$q','etollApiUrl',function($http,$q,eto
         return deferred.promise;
     };
 
-    this.createStaff = function(email,password,status){
-        var url = etollApiUrl.createStaff(email,password,status);
+    this.createStaff = function(email,password,status,token){
+        var url = etollApiUrl.createStaff(email,password,status,token);
         var deferred = $q.defer();
         $http.get(url)
             .success(function(data){
@@ -153,6 +153,7 @@ appServices.factory('navbarMenu',function(){
         ],
         auth: [
             {label: "petugas", url:"/#/list-staff"},
+            {label: "tambah petugas", url:"/#/add-staff"},
             {label: "tol", url:"/#/toll"},
             {label: "logout",url:"/#/logout"}
         ]

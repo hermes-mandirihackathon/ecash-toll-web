@@ -96,6 +96,11 @@ select::-ms-expand {
     margin-top: 20px;
 }
 
+.add-padding {
+    margin-left: 20px;
+    width: 94%;
+}
+
 .price {
     text-align: right;
     font-weight: bold;
@@ -122,4 +127,9 @@ select::-ms-expand {
     margin: 0 0 20px 10px;
     height: 40px;
     padding-top: 10px; 
+}
+
+.table {
+    width: 96%;
+    margin-left: 30px;
 }

@@ -10,7 +10,7 @@
         <script src="js/controllers.js"></script>
 		<script src="js/app.js"></script>
 
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
 
 	</head>
 	<body>
@@ -33,16 +33,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-repeat="menu in menus">
-                        <a href="{{menu.url}}">Login</a>
-                    </li>
-                    <li ng-repeat="menu in menus">
-                        <a href="{{menu.url}}">Toll</a>
-                    </li>
-                    <li ng-repeat="menu in menus">
-                        <a href="{{menu.url}}">Staffs</a>
-                    </li>
-                    <li ng-repeat="menu in menus">
-                        <a href="{{menu.url}}">Add staff</a>
+                        <a href="{{menu.url}}">{{menu.label}}</a>
                     </li>
                 </ul>
             </div><!-- /.container-fluid -->

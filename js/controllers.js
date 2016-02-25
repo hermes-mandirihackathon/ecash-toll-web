@@ -109,7 +109,8 @@ appCtrls.controller('listStaffCtrl',['$scope','mockData','etollApi','authService
     }
 }]);
 
-appCtrls.controller('addStaffCtrl',['$scope','$location','etollApi','loadingService','alertService',function($scope,$location,etollApi,loadingService,alertService){
+appCtrls.controller('addStaffCtrl',['$scope','$location','etollApi','loadingService','alertService','authService',
+    function($scope,$location,etollApi,loadingService,alertService,authService){
 
     var init = function(){
         loadingService.onload();
@@ -123,19 +124,22 @@ appCtrls.controller('addStaffCtrl',['$scope','$location','etollApi','loadingServ
                 loadingService.done();
             })
             .catch(function(message){
+                console.log(message);
                 alert(message);
                 loadingService.done();
             });
     };
 
-    $scope.addUser = function(email,password,toll_gate){
+    $scope.addUser = function(email,password,toll){
         $scope.disableSubmitButton = true;
-        etollApi.createStaff(email,password,toll_gate)
+        console.log(authService.getToken());
+        etollApi.createStaff(email,password,toll.id,authService.getToken())
             .then(function(data){
                 //TODO impl
                 if (data.status == 'ok'){
+                    alertService.success(data.message);
                 } else {
-
+                    alertService.error(data.message);
                 }
                 $scope.disableSubmitButton = false;
 

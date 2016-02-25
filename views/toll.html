@@ -16,19 +16,17 @@
     </div>
     <div class="col-md-5">
         <div class="row">
-            <label>Asal</label>
             <select ng-options="source as source.name for source in sourceTolls track by source.id" ng-model="sourceToll"
             class="form-control" ng-change="updatePrice()">
             </select>
         </div>
         <div class="row">
-            <label>Golongan</label>
             <select ng-options="cat as cat.name for cat in vehicleCategories track by cat.id" ng-model="vehicleCategory"
-            class="form-control" ng-change="updatePrice()">
+            class="form-control" ng-change="updatePrice()" placeholder="Golongan">
+                <option selected="selected">Select Your Beverage</option>
             </select>
         </div>
         <div class="row">
-            <label>Plat Nomor</label>
             <input type="text" ng-model="plate_no" class="form-control" placeholder="Plat Nomor"/>
         </div>
         <div class="row">
