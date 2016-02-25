@@ -1,9 +1,9 @@
 var appServices = angular.module('etollServices',[]);
 appServices.service('etollApiUrl',function(){
-    var BASE_URL = "http://localhost:8080/etollapi";
+    var BASE_URL = "http://etoll-api.mybluemix.net";
 
     this.login = function(email,password){
-        return BASE_URL + "/login?email="+email+"&password="+password;
+        return BASE_URL + "/staffs/login?email="+email+"&password="+password;
     };
 
     this.createActivity = function(plate_no,source_toll_id,dest_toll_id,price){
@@ -17,7 +17,11 @@ appServices.service('etollApiUrl',function(){
 
     this.createStaff = function(email,password,toll_gate){
         return BASE_URL + "/staffs/create?email="+email+"&password="+password+"&toll_gate_id="+toll_gate;
-    }
+    };
+
+    this.getStaffs = function(token){
+        return BASE_URL + "/staffs/?token="+token;
+    };
 
 });
 appServices.service('etollApi',['$http','$q','etollApiUrl',function($http,$q,etollApiUrl){
@@ -72,6 +76,19 @@ appServices.service('etollApi',['$http','$q','etollApiUrl',function($http,$q,eto
             });
         return deferred.promise;
     };
+
+    this.getStaffs = function(token){
+        var url = etollApiUrl.getStaffs(token);
+        var deferred = $q.defer();
+        $http.get(url)
+            .success(function(data){
+                deferred.resolve(data);
+            })
+            .error(function(data,status){
+                deferred.reject(status+ " " +data);
+            });
+        return deferred.promise;
+    }
 }]);
 
 appServices.factory('mockData',function(){
@@ -82,12 +99,18 @@ appServices.factory('mockData',function(){
         ],
         vehicleCategories : [
             { id : 1, name: "Mobil" },
-            { id : 2, name: "Becak" }
+            { id : 2, name: "Minibus" },
+            { id : 3, name: "Bus" }
         ],
         staffs : [
             { id : 1, email: "Yafi", toll_gate: "Pasteur"},
-            { id : 1, email: "Rosi", toll_gate: "Kopo"},
-            { id : 1, email: "Ichwan", toll_gate: "Buah Batu"}
+            { id : 2, email: "Rosi", toll_gate: "Kopo"},
+            { id : 3, email: "Ichwan", toll_gate: "Buah Batu"}
+        ],
+        prices : [
+            { id : 1, price: 15000 },
+            { id : 2, price: 20000 },
+            { id : 3, price: 30000 }
         ]
     };
 });
@@ -134,4 +157,34 @@ appServices.factory('navbarMenu',function(){
             {label: "logout",url:"/#/logout"}
         ]
     };
+});
+
+appServices.service('alertService',['$rootScope',function($rootScope){
+    this.EVENT_SUCCESS = 1;
+    this.EVENT_ERROR = 2;
+
+    var _message;
+
+    this.getMessage = function(){ return _message; };
+
+
+    this.success = function(message){
+        _message = message;
+        $rootScope.$emit(this.EVENT_SUCCESS);
+    };
+
+    this.error = function(message){
+        _message = message;
+        $rootScope.$emit(this.EVENT_ERROR);
+    };
+}]);
+
+appServices.service('loadingService',function(){
+    var _indeterminate = false;
+
+    this.isload = function(){ return _indeterminate; };
+
+    this.onload = function(){ _indeterminate = true; };
+
+    this.done = function(){ _indeterminate = false; };
 });

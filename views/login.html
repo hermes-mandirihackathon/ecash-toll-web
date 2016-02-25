@@ -11,7 +11,7 @@
             <input type="password" ng-model="password" class="form-control" placeholder="password"/>
         </div>
         <div class="row button-row">
-            <button class="btn btn-primary" type="button" ng-click="submit(email,password)">Login</button>
+            <button class="btn btn-primary" type="button" ng-click="submit(email,password)" ng-disabled="disableSubmitButton">Login</button>
         </div>
     </form>
 </div>

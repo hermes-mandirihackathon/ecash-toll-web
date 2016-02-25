@@ -2,59 +2,131 @@ var appCtrls = angular.module('etollControllers',[
     'etollServices'
 ]);
 
-appCtrls.controller('loginCtrl',['$scope','etollApi','$location','authService',function($scope,etollApi,$location,authService){
+appCtrls.controller('loginCtrl',['$scope','etollApi','$location','authService','alertService','loadingService',
+    function($scope,etollApi,$location,authService,alertService,loadingService){
+
+    $scope.disableSubmitButton = false;
 
     $scope.submit = function(email,password){
-        authService.authenticate("aaa");
-        $location.path("/toll");
-        //TODO perform http request
-        //etollApi.login(email,password)
-        //    .then(function(data){
-        //        if(data.status == 'ok'){
-        //            //TODO save to cookies maybe
-        //        } else {
-        //            //TODO handle error
-        //        }
-        //    })
-        //    .catch(function(message){
-        //        //TODO impl
-        //        alert(message);
-        //    });
+        $scope.disableSubmitButton = true;
+        loadingService.onload();
+
+        etollApi.login(email,password)
+            .then(function(data){
+                $scope.disableSubmitButton = false;
+                loadingService.done();
+                if(data.status == 'ok'){
+                    authService.authenticate(data.token);
+                    $location.path("/toll");
+                } else {
+                    alertService.error(data.message);
+                }
+
+            })
+            .catch(function(message){
+                $scope.disableSubmitButton = false;
+                loadingService.done();
+                alertService.error("error: "+message);
+            });
     };
 
 }]);
 
-appCtrls.controller('tollCtrl',['$scope','etollApi','mockData',function($scope,etollApi,mockData){
-    //TODO change to not mock
-    $scope.sourceTolls = mockData.fromToll;
-    $scope.vehicleCategories = mockData.vehicleCategories;
+appCtrls.controller('tollCtrl',['$scope','$timeout','etollApi','mockData','alertService','loadingService',
+    function($scope,$timeout,etollApi,mockData,alertService,loadingService){
 
-    $scope.submit = function(plateNo,sourceTollId,destTollId,price){
+    $scope.price = 0;
+
+    $scope.init = function(){
+        loadingService.onload();
+        $scope.vehicleCategories = mockData.vehicleCategories;
+        etollApi.getTolls()
+            .then(function(data){
+                loadingService.done();
+                if (data.status == 'ok'){
+                    $scope.sourceTolls = data.tolls;
+                } else {
+                    alertService.error(data.message);
+                }
+            })
+            .catch(function(message){
+                alert(message);
+                loadingService.done();
+            });
+    };
+
+    $scope.submit = function(plateNo,sourceTollId,destTollId){
         $scope.disableSubmitButton = true;
-        etollApi.createActivity(plateNo,sourceTollId,destTollId,price)
+        loadingService.onload();
+        etollApi.createActivity(plateNo,sourceTollId,destTollId,$scope.price)
             .then(function(data){
                 if (data.status == 'ok'){
-                    //TODO impl
+                    alertService.success(data.message);
                 } else {
-                    //TODO impl
+                    alertService.error(data.message);
                 }
                 $scope.disableSubmitButton = false;
+                loadingService.done();
             })
             .catch(function(message){
                 alert(message);
                 $scope.disableSubmitButton = false;
+                loadingService.done();
             })
+    };
+
+    $scope.updatePrice = function(){
+        for(var i = 0; i < mockData.prices.length; i++){
+            //if it is loaded
+            if ($scope.vehicleCategory != undefined){
+
+                if ($scope.vehicleCategory.id == mockData.prices[i].id){
+                    $scope.price = mockData.prices[i].price;
+                }
+            }
+        }
     };
 }]);
 
-appCtrls.controller('listStaffCtrl',['$scope','mockData',function($scope,mockData){
+appCtrls.controller('listStaffCtrl',['$scope','mockData','etollApi','authService','loadingService',
+    function($scope,mockData,etollApi,authService,loadingService){
+
     $scope.init = function(){
-        //TODO perform HTTP request
-        $scope.staffs = mockData.staffs;
+        var token = authService.getToken();
+        loadingService.onload();
+        etollApi.getStaffs(token)
+            .then(function(data){
+                loadingService.done();
+                if (data.status == 'ok'){
+                    $scope.staffs = data.staffs;
+                } else {
+                    //TODO impl
+                }
+            }).catch(function(message){
+                loadingService.done();
+                alert(message);
+            });
     }
 }]);
 
-appCtrls.controller('addStaffCtrl',['$scope','$location','etollApi',function($scope,$location,etollApi){
+appCtrls.controller('addStaffCtrl',['$scope','$location','etollApi','loadingService','alertService',function($scope,$location,etollApi,loadingService,alertService){
+
+    var init = function(){
+        loadingService.onload();
+        etollApi.getTolls()
+            .then(function(data){
+                if (data.status == 'ok'){
+                    $scope.tolls = data.tolls;
+                } else {
+                    alertService.error(data.message);
+                }
+                loadingService.done();
+            })
+            .catch(function(message){
+                alert(message);
+                loadingService.done();
+            });
+    };
 
     $scope.addUser = function(email,password,toll_gate){
         $scope.disableSubmitButton = true;
@@ -76,7 +148,9 @@ appCtrls.controller('addStaffCtrl',['$scope','$location','etollApi',function($sc
 
                 $location.path("/list-staff");
             });
-    }
+    };
+
+    init();
 }]);
 
 appCtrls.controller('navbarCtrl',['authService','$scope','$location','navbarMenu','$rootScope',function(authService,$scope,$location,navbarMenu,$rootScope){
@@ -112,4 +186,44 @@ appCtrls.controller('logoutCtrl',['authService','$location','$scope',function(au
         $location.path("/login");
     };
     $scope.logout();
+}]);
+
+appCtrls.controller('loadingCtrl',['$scope','loadingService',function($scope,loadingService){
+    $scope.showIndeterminate = false;
+    (function(){
+        $scope.$watch(function(){
+            return loadingService.isload();
+        },function(newVal,oldVal){
+            $scope.showIndeterminate = loadingService.isload();
+        })
+    }());
+}]);
+appCtrls.controller('alertCtrl',['$scope','alertService','$rootScope','$location',function($scope,alertService,$rootScope,$location){
+    var ALERT_TIMEOUT = 3000; //millis
+    $scope.hide = true;
+
+    $scope.close = function(){
+        $scope.hide = true;
+    };
+
+
+    $rootScope.$on(alertService.EVENT_SUCCESS,function(){
+        console.log("a");
+        $scope.message = alertService.getMessage();
+        $scope.hide = false;
+        setTimeout(function(){
+            $scope.hide = true;
+            $scope.$digest();
+        },ALERT_TIMEOUT);
+    });
+
+    $rootScope.$on(alertService.EVENT_ERROR, function () {
+        $scope.message = alertService.getMessage();
+        $scope.hide = false;
+        setTimeout(function(){
+            $scope.hide = true;
+            $scope.$digest();
+        },ALERT_TIMEOUT);
+    });
+
 }]);

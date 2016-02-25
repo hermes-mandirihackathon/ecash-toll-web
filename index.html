@@ -25,9 +25,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+<<<<<<< HEAD
                     <a class="navbar-brand col-logo" href="#">
                         <img src="img/logo-min.png">
                     </a>
+=======
+                    <a class="navbar-brand" href="#">E-Cash Toll</a>
+>>>>>>> b6b23fa92ecaf0e9b5e60dfe87c08430d0fe4495
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,6 +53,30 @@
         </nav>
         <!-- end navbar-->
         <div style="padding:30px;"></div>
+<<<<<<< HEAD
+=======
+        <div class="container">
+            <div ng-controller="alertCtrl" class="alert alert-success" ng-hide="hide">
+                <button type="button" class="close" ng-click="close()"><span>&times;</span></button>
+                {{message}}
+            </div>
+        </div>
+        <!--<div style="text-align: center;">-->
+            <!--<a href="/#/login">Login</a> |-->
+            <!--<a href="/#/toll">Toll</a> |-->
+            <!--<a href="/#/list-staff">Staffs</a> |-->
+            <!--<a href="/#/add-staff">Add staff</a>-->
+        <!--</div>-->
+        <div class="row" ng-controller="loadingCtrl">
+            <div class="col-md-4 col-md-offset-4" style="padding-top:20px;" ng-show="showIndeterminate">
+                <div class="progress progress-striped active">
+                    <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+>>>>>>> b6b23fa92ecaf0e9b5e60dfe87c08430d0fe4495
         <div class="container">
             <div ng-view></div>
         </div>

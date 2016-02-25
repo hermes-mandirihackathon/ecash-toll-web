@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" ng-init="init()">
 <form>
     <div class="row row-top">
 
@@ -16,18 +16,22 @@
     </div>
     <div class="col-md-5">
         <div class="row">
-            <select ng-options="source as source.name for source in sourceTolls track by source.id" ng-model="sourceTollId"
-            class="form-control">
+            <label>Asal</label>
+            <select ng-options="source as source.name for source in sourceTolls track by source.id" ng-model="sourceToll"
+            class="form-control" ng-change="updatePrice()">
             </select>
         </div>
         <div class="row">
-            <select ng-options="cat as cat.name for cat in vehicleCategories track by cat.id" ng-model="vehicleCategoryId"
-            class="form-control">
+            <label>Golongan</label>
+            <select ng-options="cat as cat.name for cat in vehicleCategories track by cat.id" ng-model="vehicleCategory"
+            class="form-control" ng-change="updatePrice()">
             </select>
         </div>
         <div class="row">
-            <input type="text" ng-model="plate_no" class="form-control"/>
+            <label>Plat Nomor</label>
+            <input type="text" ng-model="plate_no" class="form-control" placeholder="Plat Nomor"/>
         </div>
+<<<<<<< HEAD
         <div class="row">
             <div class="col-md-4 no-padding">
                 Total
@@ -38,6 +42,16 @@
         </div>
         <div class="row button-row">
             <button class="btn btn-primary btn-submit" ng-click="submit(plateNo,sourceTollId,destTollId,price)" ng-disabled="disableSubmitButton">Submit</button>
+=======
+        <div class="row" style="padding:10px;">
+            <div class="col-md-4">Harga (Rp)</div>
+            <div class="col-md-6">
+                <span class="pull-right" ng-bind="price"></span>
+            </div>
+        </div>
+        <div class="row button-row">
+            <button class="btn btn-primary" ng-click="submit(plateNo,sourceToll.id,destTollId)" ng-disabled="disableSubmitButton">Submit</button>
+>>>>>>> b6b23fa92ecaf0e9b5e60dfe87c08430d0fe4495
         </div>
     </div>
 </form>

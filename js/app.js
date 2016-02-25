@@ -26,5 +26,5 @@ app.config(['$routeProvider',function($routeProvider){
             controller: 'logoutCtrl',
             templateUrl: 'views/logout.html'
         })
-        .otherwise("/toll");
+        .otherwise("/login");
 }]);
