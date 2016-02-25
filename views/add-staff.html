@@ -1,20 +1,25 @@
 <div class="col-md-6 col-md-offset-3">
-    <div class="row title-row">
-        Tambah staff
+    <div class="row row-top">
+
+    </div>
+    <div class="row title-row title-line">
+        <span>
+            Tambah Staff
+        </span>
     </div>
     <div class="row">
-        <input type="text" class="form-control" ng-model="email" placeholder="email"/>
+        <input type="text" class="form-control add-padding" ng-model="email" placeholder="email"/>
     </div>
     <div class="row">
-        <input type="password" class="form-control" ng-model="password" placeholder="password"/>
+        <input type="password" class="form-control add-padding" ng-model="password" placeholder="password"/>
     </div>
     <div class="row">
         <select ng-options="toll as toll.name for toll in tolls track by toll.id" ng-model="select_toll"
-                class="form-control">
+                class="form-control add-padding">
         </select>
     </div>
     <div class="row button-row">
-        <button type="button" class="btn btn-primary"
+        <button type="button" class="btn btn-primary btn-submit"
                 ng-click="addUser(email,password,select_toll)" ng-disabled="disableSubmitButton">Tambah</button>
     </div>
 </div>

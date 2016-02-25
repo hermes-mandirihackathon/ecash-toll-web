@@ -133,3 +133,11 @@ select::-ms-expand {
     width: 96%;
     margin-left: 30px;
 }
+
+.icon-delete {
+    color: #c3020f !important;
+}
+
+td > a {
+    padding-right: 10px;
+}
