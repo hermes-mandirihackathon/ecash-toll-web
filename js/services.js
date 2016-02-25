@@ -1,6 +1,7 @@
 var appServices = angular.module('etollServices',[]);
 appServices.service('etollApiUrl',function(){
     var BASE_URL = "http://etoll-api.mybluemix.net";
+    // var BASE_URL = "http://localhost:8080";
 
     this.login = function(email,password){
         return BASE_URL + "/staffs/login?email="+email+"&password="+password;
@@ -108,9 +109,9 @@ appServices.factory('mockData',function(){
             { id : 3, email: "Ichwan", toll_gate: "Buah Batu"}
         ],
         prices : [
-            { id : 1, price: 15000 },
-            { id : 2, price: 20000 },
-            { id : 3, price: 30000 }
+            { id : 1, price: 1 },
+            { id : 2, price: 2 },
+            { id : 3, price: 3 }
         ]
     };
 });

@@ -36,6 +36,7 @@ appCtrls.controller('tollCtrl',['$scope','$timeout','etollApi','mockData','alert
     function($scope,$timeout,etollApi,mockData,alertService,loadingService){
 
     $scope.price = 0;
+    $scope.destToll = {};
 
     $scope.init = function(){
         loadingService.onload();
@@ -44,7 +45,16 @@ appCtrls.controller('tollCtrl',['$scope','$timeout','etollApi','mockData','alert
             .then(function(data){
                 loadingService.done();
                 if (data.status == 'ok'){
-                    $scope.sourceTolls = data.tolls;
+                    //ambil satu, jadi destToll. sisanya jadi sourceToll
+                    //TODO impl
+                    $scope.sourceTolls = [];
+                    for(var i = 0; i < data.tolls.length; i++){
+                        if (i == 0){
+                            $scope.destToll = data.tolls[i];
+                        } else {
+                            $scope.sourceTolls.push(data.tolls[i]);
+                        }
+                    }
                 } else {
                     alertService.error(data.message);
                 }
@@ -55,13 +65,13 @@ appCtrls.controller('tollCtrl',['$scope','$timeout','etollApi','mockData','alert
             });
     };
 
-    $scope.submit = function(plateNo,sourceTollId,destTollId){
+    $scope.submit = function(plateNo,sourceTollId){
         $scope.disableSubmitButton = true;
         loadingService.onload();
-        etollApi.createActivity(plateNo,sourceTollId,destTollId,$scope.price)
+        etollApi.createActivity(plateNo,sourceTollId,$scope.destToll.id,$scope.price)
             .then(function(data){
                 if (data.status == 'ok'){
-                    alertService.success(data.message);
+                    alertService.success("Pembayaran sukses");
                 } else {
                     alertService.error(data.message);
                 }

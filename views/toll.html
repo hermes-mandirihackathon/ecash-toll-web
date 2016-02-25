@@ -1,14 +1,8 @@
 <div class="col-md-12" ng-init="init()">
 <form>
-    <div class="row row-top">
-
-    </div>
-    <div class="row alert alert-success" role="alert">
-        <strong>#454544</strong> submitted successfully.
-    </div>
     <div class="row title-row title-line">
         <span>
-            #454545
+            Input data <span ng-bind="destToll.name"></span>
         </span>
     </div>
     <div class="col-md-7">
@@ -27,7 +21,7 @@
             </select>
         </div>
         <div class="row">
-            <input type="text" ng-model="plate_no" class="form-control" placeholder="Plat Nomor"/>
+            <input type="text" ng-model="plateNo" class="form-control" placeholder="Plat Nomor"/>
         </div>
         <div class="row">
             <div class="col-md-4 no-padding">Total</div>
@@ -36,7 +30,7 @@
             </div>
         </div>
         <div class="row button-row">
-            <button class="btn btn-primary btn-submit" ng-click="submit(plateNo,sourceToll.id,destTollId)" ng-disabled="disableSubmitButton">Submit</button>
+            <button class="btn btn-primary btn-submit" ng-click="submit(plateNo,sourceToll.id)" ng-disabled="disableSubmitButton">Submit</button>
         </div>
     </div>
 </form>

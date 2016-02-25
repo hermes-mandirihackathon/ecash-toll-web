@@ -145,3 +145,12 @@ td > a {
 thead {
     background-color: #e2edef !important;
 }
+
+.loading {
+    position: absolute;
+    top: 70px;
+}
+
+.progress {
+    margin-bottom: 0;
+}
